@@ -1,0 +1,43 @@
+<section id="contact" class="px-5 py-20 lg:px-8">
+  <div class="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.9fr_1.1fr]">
+    <div>
+      <h2 class="text-3xl font-bold tracking-normal text-white sm:text-5xl">Расскажите, какой бот нужен</h2>
+      <p class="mt-4 text-lg leading-8 text-slate-400">
+        Опишите задачу, аудиторию и желаемые интеграции. Вернемся с оценкой, рисками и планом первого релиза.
+      </p>
+      <div class="mt-8 space-y-4 text-sm text-slate-300">
+        <p class="flex items-center gap-3">
+          <svg class="h-5 w-5 text-electric" aria-hidden="true"><use href="assets/icons.svg#icon-clock"></use></svg>
+          Ответ в течение рабочего дня
+        </p>
+        <p class="flex items-center gap-3">
+          <svg class="h-5 w-5 text-electric" aria-hidden="true"><use href="assets/icons.svg#icon-shield"></use></svg>
+          NDA и безопасная работа с токенами
+        </p>
+      </div>
+    </div>
+
+    <form class="rounded-xl border border-white/12 bg-panel/80 p-5 shadow-2xl shadow-black/30 sm:p-8">
+      <div class="grid gap-5 sm:grid-cols-2">
+        <label class="field">
+          <span>Имя</span>
+          <input type="text" name="name" placeholder="Алексей" />
+        </label>
+        <label class="field">
+          <span>Telegram</span>
+          <input type="text" name="telegram" placeholder="@username" />
+        </label>
+      </div>
+      <label class="field mt-5">
+        <span>Что должен делать бот</span>
+        <textarea name="message" rows="5" placeholder="Например: принимать заказы, отправлять счета и создавать сделки в CRM"></textarea>
+      </label>
+      <button
+        type="submit"
+        class="mt-6 inline-flex h-12 w-full items-center justify-center rounded-lg bg-electric px-6 text-base font-semibold text-white shadow-glow transition hover:bg-cyanfire focus:outline-none focus:ring-2 focus:ring-cyanfire focus:ring-offset-2 focus:ring-offset-panel sm:w-auto"
+      >
+        Отправить заявку
+      </button>
+    </form>
+  </div>
+</section>

@@ -2,34 +2,34 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
     <title>AI Survey WebApp</title>
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../app.css?v=2" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
   </head>
-  <body class="min-h-screen bg-[#070b18] px-4 py-5 text-slate-100">
-    <main class="mx-auto max-w-md rounded-[16px] border border-white/10 bg-[#111827] p-5 shadow-2xl shadow-black/30">
-      <div class="h-2 rounded-full bg-white/10">
-        <div id="progress" class="h-2 rounded-full bg-sky-400 transition-all duration-300" style="width: 33%"></div>
-      </div>
+  <body>
+    <main class="app">
+      <section class="panel">
+        <div class="progress">
+          <div id="progress" class="progress-bar" style="width: 33%"></div>
+        </div>
 
-      <section id="step" class="mt-6 transition duration-300"></section>
+        <section id="step" class="stack" style="margin-top: 18px"></section>
 
-      <div class="mt-6 flex gap-3">
-        <button id="back" class="flex-1 rounded-[16px] border border-white/10 px-5 py-4 font-bold text-slate-200 transition active:scale-[0.98]">
-          Назад
-        </button>
-        <button id="next" class="flex-1 rounded-[16px] bg-sky-400 px-5 py-4 font-bold text-slate-950 transition active:scale-[0.98]">
-          Далее
-        </button>
-      </div>
+        <div class="actions">
+          <button id="back" class="secondary">Назад</button>
+          <button id="next" class="primary">Далее</button>
+        </div>
+      </section>
     </main>
 
     <script>
       const tg = window.Telegram?.WebApp;
       tg?.ready();
       tg?.expand();
+      tg?.setHeaderColor?.("#17212b");
+      tg?.setBackgroundColor?.("#0f1720");
 
       const steps = [
         { key: "goal", title: "Цель бота", options: ["Продажи", "Поддержка", "Обучение"] },
@@ -43,17 +43,15 @@
         const step = steps[currentStep];
         document.querySelector("#progress").style.width = `${((currentStep + 1) / steps.length) * 100}%`;
         document.querySelector("#step").innerHTML = `
-          <p class="text-sm font-semibold text-sky-300">Шаг ${currentStep + 1} из ${steps.length}</p>
-          <h1 class="mt-2 text-2xl font-bold">${step.title}</h1>
-          <div class="mt-5 grid gap-3">
+          <div>
+            <p class="caption">Шаг ${currentStep + 1} из ${steps.length}</p>
+            <h1 class="title" style="margin-top: 6px">${step.title}</h1>
+          </div>
+          <div class="stack">
             ${step.options
               .map(
                 (option) => `
-                  <button class="option rounded-[16px] border px-4 py-4 text-left font-semibold transition active:scale-[0.98] ${
-                    answers[step.key] === option
-                      ? "border-sky-400 bg-sky-400/15 text-sky-200"
-                      : "border-white/10 bg-white/5 text-slate-200"
-                  }" data-value="${option}">
+                  <button class="option ${answers[step.key] === option ? "active" : ""}" data-value="${option}">
                     ${option}
                   </button>
                 `
@@ -71,7 +69,7 @@
         });
 
         document.querySelector("#back").disabled = currentStep === 0;
-        document.querySelector("#back").classList.toggle("opacity-40", currentStep === 0);
+        document.querySelector("#back").style.opacity = currentStep === 0 ? "0.45" : "1";
         document.querySelector("#next").textContent = currentStep === steps.length - 1 ? "Отправить" : "Далее";
       }
 

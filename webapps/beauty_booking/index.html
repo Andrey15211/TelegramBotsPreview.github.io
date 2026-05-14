@@ -2,100 +2,73 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
     <title>Beauty Booking WebApp</title>
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../app.css?v=2" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          extend: {
-            colors: {
-              ink: "#070b18",
-              card: "#111827",
-              accent: "#38bdf8"
-            },
-            borderRadius: {
-              tactile: "16px"
-            }
-          }
-        }
-      };
-    </script>
   </head>
-  <body class="min-h-screen bg-ink px-4 py-5 text-slate-100">
-    <main class="mx-auto max-w-md">
-      <section class="rounded-tactile border border-white/10 bg-card p-5 shadow-2xl shadow-black/30">
-        <h1 class="text-2xl font-bold">Запись в салон</h1>
-        <p class="mt-2 text-sm leading-6 text-slate-400">Выберите мастера, дату и удобное время визита.</p>
+  <body>
+    <main class="app">
+      <header class="hero">
+        <div>
+          <h1 class="title">Запись в салон</h1>
+          <p class="subtitle">Выберите мастера, дату и удобное время визита.</p>
+        </div>
+      </header>
 
-        <form id="bookingForm" class="mt-6 space-y-4">
-          <label class="block">
-            <span class="text-sm font-semibold text-slate-300">Мастер</span>
-            <select id="master" class="mt-2 w-full rounded-tactile border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-accent">
-              <option value="Анна, стилист">Анна, стилист</option>
-              <option value="Мария, колорист">Мария, колорист</option>
-              <option value="Ирина, бровист">Ирина, бровист</option>
-            </select>
-          </label>
+      <section class="panel">
+        <form id="bookingForm" class="stack">
+          <div class="form-grid">
+            <label class="field">
+              <span class="label">Мастер</span>
+              <select id="master" class="control">
+                <option value="Анна, стилист">Анна, стилист</option>
+                <option value="Мария, колорист">Мария, колорист</option>
+                <option value="Ирина, бровист">Ирина, бровист</option>
+              </select>
+            </label>
 
-          <label class="block">
-            <span class="text-sm font-semibold text-slate-300">Дата</span>
-            <input id="date" type="date" class="mt-2 w-full rounded-tactile border border-white/10 bg-white/5 px-4 py-3 outline-none focus:border-accent" />
-          </label>
+            <label class="field">
+              <span class="label">Дата</span>
+              <input id="date" type="date" class="control" />
+            </label>
+          </div>
 
-          <div>
-            <span class="text-sm font-semibold text-slate-300">Время</span>
-            <div id="timeGrid" class="mt-2 grid grid-cols-3 gap-2">
-              <button type="button" data-time="10:00" class="time-btn">10:00</button>
-              <button type="button" data-time="12:30" class="time-btn">12:30</button>
-              <button type="button" data-time="15:00" class="time-btn">15:00</button>
-              <button type="button" data-time="17:30" class="time-btn">17:30</button>
-              <button type="button" data-time="19:00" class="time-btn">19:00</button>
-              <button type="button" data-time="20:30" class="time-btn">20:30</button>
+          <div class="field">
+            <span class="label">Время</span>
+            <div class="time-grid">
+              <button type="button" data-time="10:00" class="chip">10:00</button>
+              <button type="button" data-time="12:30" class="chip">12:30</button>
+              <button type="button" data-time="15:00" class="chip">15:00</button>
+              <button type="button" data-time="17:30" class="chip">17:30</button>
+              <button type="button" data-time="19:00" class="chip">19:00</button>
+              <button type="button" data-time="20:30" class="chip">20:30</button>
             </div>
           </div>
 
-          <button type="submit" class="w-full rounded-tactile bg-accent px-5 py-4 font-bold text-slate-950 transition active:scale-[0.98]">
-            Записаться
-          </button>
+          <button type="submit" class="primary">Записаться</button>
         </form>
       </section>
     </main>
-
-    <style>
-      .time-btn {
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        border-radius: 16px;
-        background: rgba(255, 255, 255, 0.05);
-        padding: 12px;
-        font-weight: 700;
-        transition: 150ms ease;
-      }
-
-      .time-btn.active {
-        border-color: #38bdf8;
-        background: rgba(56, 189, 248, 0.18);
-        color: #7dd3fc;
-      }
-    </style>
 
     <script>
       const tg = window.Telegram?.WebApp;
       tg?.ready();
       tg?.expand();
+      tg?.setHeaderColor?.("#17212b");
+      tg?.setBackgroundColor?.("#0f1720");
 
       let selectedTime = "10:00";
       const dateInput = document.querySelector("#date");
       dateInput.valueAsDate = new Date();
 
-      document.querySelectorAll(".time-btn").forEach((button) => {
+      document.querySelectorAll(".chip").forEach((button) => {
         if (button.dataset.time === selectedTime) button.classList.add("active");
         button.addEventListener("click", () => {
           tg?.HapticFeedback?.impactOccurred("light");
           selectedTime = button.dataset.time;
-          document.querySelectorAll(".time-btn").forEach((item) => item.classList.remove("active"));
+          document.querySelectorAll(".chip").forEach((item) => item.classList.remove("active"));
           button.classList.add("active");
         });
       });

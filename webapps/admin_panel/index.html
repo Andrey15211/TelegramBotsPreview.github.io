@@ -2,41 +2,39 @@
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no" />
     <title>Admin Panel WebApp</title>
     <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="../app.css?v=2" />
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
-  <body class="min-h-screen bg-[#070b18] px-4 py-5 text-slate-100">
-    <main class="mx-auto max-w-md">
-      <section class="rounded-[16px] border border-white/10 bg-[#111827] p-5 shadow-2xl shadow-black/30">
-        <h1 class="text-2xl font-bold">Дашборд продаж</h1>
-        <p class="mt-2 text-sm text-slate-400">Демо-статистика заказов по каналам.</p>
+  <body>
+    <main class="app">
+      <section class="panel">
+        <h1 class="title">Дашборд продаж</h1>
+        <p class="subtitle">Демо-статистика заказов по каналам.</p>
 
-        <div class="mt-6 rounded-[16px] bg-white/5 p-4">
+        <div class="chart-box">
           <canvas id="salesChart" aria-label="Круговая диаграмма продаж"></canvas>
         </div>
 
-        <div class="mt-5 grid grid-cols-3 gap-3">
-          <div class="rounded-[16px] bg-white/5 p-3">
-            <p class="text-xl font-bold">48</p>
-            <p class="text-xs text-slate-400">заказов</p>
+        <div class="stats-grid" style="margin-top: 14px">
+          <div class="stat">
+            <strong>48</strong>
+            <span class="caption">заказов</span>
           </div>
-          <div class="rounded-[16px] bg-white/5 p-3">
-            <p class="text-xl font-bold">182k</p>
-            <p class="text-xs text-slate-400">выручка</p>
+          <div class="stat">
+            <strong>182k</strong>
+            <span class="caption">выручка</span>
           </div>
-          <div class="rounded-[16px] bg-white/5 p-3">
-            <p class="text-xl font-bold">31%</p>
-            <p class="text-xs text-slate-400">повтор</p>
+          <div class="stat">
+            <strong>31%</strong>
+            <span class="caption">повтор</span>
           </div>
         </div>
 
-        <button id="sendReport" class="mt-5 w-full rounded-[16px] bg-sky-400 px-5 py-4 font-bold text-slate-950 transition active:scale-[0.98]">
-          Отправить отчет
-        </button>
+        <button id="sendReport" class="primary" style="margin-top: 16px">Отправить отчет</button>
       </section>
     </main>
 
@@ -44,6 +42,8 @@
       const tg = window.Telegram?.WebApp;
       tg?.ready();
       tg?.expand();
+      tg?.setHeaderColor?.("#17212b");
+      tg?.setBackgroundColor?.("#0f1720");
 
       new Chart(document.querySelector("#salesChart"), {
         type: "doughnut",
@@ -53,15 +53,16 @@
             {
               data: [42, 38, 20],
               backgroundColor: ["#38bdf8", "#2563eb", "#8b5cf6"],
-              borderColor: "#111827",
+              borderColor: "#17212b",
               borderWidth: 4
             }
           ]
         },
         options: {
+          responsive: true,
           plugins: {
             legend: {
-              labels: { color: "#cbd5e1", boxWidth: 14, usePointStyle: true }
+              labels: { color: "#d8e4f0", boxWidth: 14, usePointStyle: true }
             }
           },
           cutout: "68%"

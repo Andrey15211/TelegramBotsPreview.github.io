@@ -1,1 +1,1 @@
-"""Aiogram bot package for Telegram WebApp demos."""
+"""Aiogram bot package for Telegram demos."""

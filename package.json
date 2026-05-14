@@ -1,0 +1,9 @@
+{
+  "name": "telegram-bots-preview",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node -e \"console.log('Static site: no build step')\""
+  },
+  "devDependencies": {}
+}

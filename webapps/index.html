@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Telegram WebApps Demo</title>
+    <link rel="icon" href="../assets/favicon.svg" type="image/svg+xml" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="min-h-screen bg-[#070b18] px-4 py-8 text-slate-100">
+    <main class="mx-auto max-w-3xl">
+      <h1 class="text-3xl font-black sm:text-5xl">Telegram WebApps Demo</h1>
+      <p class="mt-4 max-w-2xl text-lg leading-8 text-slate-400">
+        Каталог локальных демо-интерфейсов для Telegram-бота. Откройте нужный кейс напрямую или используйте эти URL в WebApp-кнопках.
+      </p>
+
+      <section class="mt-8 grid gap-4 sm:grid-cols-2">
+        <a class="demo-card" href="beauty_booking/index.html">
+          <span>Beauty Booking</span>
+          <small>Календарь, мастер и время записи</small>
+        </a>
+        <a class="demo-card" href="ecommerce_shop/index.html">
+          <span>Ecommerce Shop</span>
+          <small>Товары, корзина и оформление</small>
+        </a>
+        <a class="demo-card" href="ai_survey/index.html">
+          <span>AI Survey</span>
+          <small>Пошаговый интерактивный опрос</small>
+        </a>
+        <a class="demo-card" href="admin_panel/index.html">
+          <span>Admin Panel</span>
+          <small>Дашборд с Chart.js</small>
+        </a>
+      </section>
+    </main>
+
+    <style>
+      .demo-card {
+        display: grid;
+        gap: 10px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        background: #111827;
+        padding: 22px;
+        text-decoration: none;
+        transition:
+          transform 160ms ease,
+          border-color 160ms ease;
+      }
+
+      .demo-card:hover {
+        border-color: #38bdf8;
+        transform: translateY(-2px);
+      }
+
+      .demo-card span {
+        color: white;
+        font-size: 1.2rem;
+        font-weight: 800;
+      }
+
+      .demo-card small {
+        color: #94a3b8;
+        line-height: 1.6;
+      }
+    </style>
+  </body>
+</html>

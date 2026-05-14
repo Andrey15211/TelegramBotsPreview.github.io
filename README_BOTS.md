@@ -17,7 +17,7 @@ pip install -r requirements.txt
 Для кнопок Telegram WebApp используйте только HTTPS:
 
 ```powershell
-WEBAPP_BASE_URL=https://andrey15211.github.io/TelegramBotsPreview.github.io/webapps
+WEBAPP_BASE_URL=https://telegram-bots-preview-github-io.vercel.app/webapps
 ```
 
 `http://127.0.0.1:8000/webapps` подходит только для теста страниц в браузере. Telegram отклонит такой URL в inline-кнопке.

@@ -5,7 +5,7 @@ from shared.config import Settings
 
 def main_menu(settings: Settings) -> InlineKeyboardMarkup:
     base_url = settings.webapp_base_url
-    version = "v=2"
+    version = "v=3"
 
     return InlineKeyboardMarkup(
         inline_keyboard=[

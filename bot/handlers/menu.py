@@ -22,3 +22,9 @@ async def start(message: Message) -> None:
 async def menu(message: Message) -> None:
     settings = get_settings()
     await message.answer("Демо-кейсы:", reply_markup=main_menu(settings))
+
+
+@router.message(Command("webapp_url"))
+async def webapp_url(message: Message) -> None:
+    settings = get_settings()
+    await message.answer(f"WEBAPP_BASE_URL: {settings.webapp_base_url}")

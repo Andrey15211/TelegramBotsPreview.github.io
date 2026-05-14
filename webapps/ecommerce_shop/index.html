@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ecommerce Shop WebApp</title>
+    <link rel="icon" href="../../assets/favicon.svg" type="image/svg+xml" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  </head>
+  <body class="min-h-screen bg-[#070b18] px-4 py-5 text-slate-100">
+    <main class="mx-auto max-w-md">
+      <h1 class="text-2xl font-bold">Магазин аксессуаров</h1>
+      <p class="mt-2 text-sm text-slate-400">Добавьте товары в корзину и отправьте заказ боту.</p>
+
+      <section id="products" class="mt-5 space-y-3"></section>
+
+      <footer class="sticky bottom-4 mt-5 rounded-[16px] border border-white/10 bg-[#111827]/95 p-4 shadow-2xl shadow-black/40 backdrop-blur">
+        <div class="flex items-center justify-between">
+          <span class="text-sm text-slate-400">Итого</span>
+          <strong id="total" class="text-2xl">0 ₽</strong>
+        </div>
+        <button id="checkout" class="mt-4 w-full rounded-[16px] bg-sky-400 px-5 py-4 font-bold text-slate-950 transition active:scale-[0.98]">
+          Оформить
+        </button>
+      </footer>
+    </main>
+
+    <script>
+      const tg = window.Telegram?.WebApp;
+      tg?.ready();
+      tg?.expand();
+
+      const products = [
+        { id: "case", name: "Чехол Neon", price: 1290 },
+        { id: "charger", name: "Быстрая зарядка", price: 2490 },
+        { id: "buds", name: "Наушники Air Lite", price: 3990 }
+      ];
+      const cart = Object.fromEntries(products.map((product) => [product.id, 0]));
+
+      function render() {
+        document.querySelector("#products").innerHTML = products
+          .map(
+            (product) => `
+              <article class="rounded-[16px] border border-white/10 bg-[#111827] p-4">
+                <div class="flex items-start justify-between gap-4">
+                  <div>
+                    <h2 class="font-bold">${product.name}</h2>
+                    <p class="mt-1 text-sm text-slate-400">${product.price.toLocaleString("ru-RU")} ₽</p>
+                  </div>
+                  <div class="flex items-center gap-3">
+                    <button class="qty-btn" data-action="minus" data-id="${product.id}">-</button>
+                    <span class="w-6 text-center font-bold">${cart[product.id]}</span>
+                    <button class="qty-btn" data-action="plus" data-id="${product.id}">+</button>
+                  </div>
+                </div>
+              </article>
+            `
+          )
+          .join("");
+
+        document.querySelectorAll(".qty-btn").forEach((button) => {
+          button.className = "qty-btn grid h-10 w-10 place-items-center rounded-[16px] border border-white/10 bg-white/5 text-lg font-bold text-sky-300 transition active:scale-95";
+          button.addEventListener("click", () => updateCart(button.dataset.id, button.dataset.action));
+        });
+
+        document.querySelector("#total").textContent = `${getTotal().toLocaleString("ru-RU")} ₽`;
+      }
+
+      function updateCart(id, action) {
+        tg?.HapticFeedback?.impactOccurred("light");
+        cart[id] = Math.max(0, cart[id] + (action === "plus" ? 1 : -1));
+        render();
+      }
+
+      function getTotal() {
+        return products.reduce((sum, product) => sum + product.price * cart[product.id], 0);
+      }
+
+      function sendDataToBot() {
+        tg?.HapticFeedback?.notificationOccurred("success");
+        const selected = products
+          .filter((product) => cart[product.id] > 0)
+          .map((product) => ({ ...product, quantity: cart[product.id] }));
+
+        const data = {
+          case: "ecommerce_shop",
+          service_name: "Ecommerce shop order",
+          items: selected,
+          total: getTotal(),
+          status: "checkout"
+        };
+        tg?.sendData(JSON.stringify(data));
+      }
+
+      document.querySelector("#checkout").addEventListener("click", sendDataToBot);
+      render();
+    </script>
+  </body>
+</html>
